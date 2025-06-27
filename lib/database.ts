@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 const { MONGO_CONNECTION_STRING } = process.env
 
 let isConnected = false
-let connectionPromise = null
+let connectionPromise: Promise<unknown> | null = null
 
 // Create a connection promise that resolves when connected
 function connectToDatabase() {
