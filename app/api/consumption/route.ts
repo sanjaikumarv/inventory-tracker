@@ -2,10 +2,12 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { ensureConnection } from '@/lib/database';
 import { InventoryItem } from '@/models/InventoryItem';
 import { InventoryConsumption } from '@/models/InventoryConsumption';
+import { middleware } from '@/lib/middleware';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     await ensureConnection();
+    await middleware(request)
     const consumptionLogs = await InventoryConsumption.find({})
       .populate('itemId')
       .sort({ date: -1 });
@@ -22,11 +24,11 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     await ensureConnection();
+    await middleware(request)
     const body = await request.json();
 
     const { itemId, date, quantity } = body;
 
-    // Validation
     if (!itemId || !date || quantity === undefined) {
       return NextResponse.json(
         { message: 'All fields are required' },
@@ -41,13 +43,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if item exists
     const item = await InventoryItem.findById(itemId);
     if (!item) {
       return NextResponse.json({ message: 'Item not found' }, { status: 404 });
     }
 
-    // Check if there's enough stock
     if (quantity > item.currentQuantity) {
       return NextResponse.json(
         {
@@ -57,7 +57,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create consumption log
     const consumptionLog = new InventoryConsumption({
       itemId,
       date: new Date(date),
@@ -66,7 +65,6 @@ export async function POST(request: NextRequest) {
 
     await consumptionLog.save();
 
-    // Update item quantity
     item.currentQuantity -= quantity;
     if (item.currentQuantity - quantity <= 0) {
       item.status = "OUT_OF_STOCK"

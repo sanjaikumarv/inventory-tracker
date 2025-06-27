@@ -22,7 +22,6 @@ export default function Dashboard() {
     })
     const { loading } = GetData<InventoryItem[]>(`api/items`, {
         onSuccess(data) {
-
             const stats = {
                 totalItems: data.length,
                 inStock: data.filter((item) => item.currentQuantity > item.reorderThreshold).length,

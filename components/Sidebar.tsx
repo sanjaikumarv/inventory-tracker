@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { BarChart3, Plus, ClipboardList, Menu, X, Package } from "lucide-react"
+import { BarChart3, Plus, ClipboardList, Menu, X, Package, LogOut } from "lucide-react"
 import Link from "next/link"
 
 export function Sidebar() {
@@ -12,6 +12,7 @@ export function Sidebar() {
         { id: "dashboard", label: "Dashboard", icon: BarChart3 },
         { id: "inventory-items", label: "Inventory Item", icon: Plus },
         { id: "inventory-consumptions", label: "Inventory Consumption", icon: ClipboardList },
+        { id: "logout", label: "Logout", icon: LogOut },
     ]
 
     const handleTabClick = (tabId: string) => {

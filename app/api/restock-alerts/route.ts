@@ -1,10 +1,12 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { ensureConnection } from "@/lib/database"
 import { InventoryItem } from "@/models/InventoryItem"
+import { middleware } from "@/lib/middleware"
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     await ensureConnection()
+    await middleware(request)
 
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
@@ -34,7 +36,7 @@ export async function GET() {
       },
       {
         $match: {
-          "consumptionLogs.0": { $exists: true } // Only items with at least one consumption log
+          "consumptionLogs.0": { $exists: true }
         }
       },
       {

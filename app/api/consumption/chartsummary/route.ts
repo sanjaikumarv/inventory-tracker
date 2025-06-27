@@ -1,10 +1,12 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { ensureConnection } from '@/lib/database';
 import { InventoryConsumption } from '@/models/InventoryConsumption';
+import { middleware } from '@/lib/middleware';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
     try {
         await ensureConnection();
+        await middleware(request)
         const consumptionLogs = await InventoryConsumption.aggregate(
             [
                 {
@@ -15,9 +17,9 @@ export async function GET() {
                 },
                 {
                     $lookup: {
-                        from: "inventoryItems", // Replace with your actual items collection name
+                        from: "inventoryItems",
                         localField: "_id",
-                        foreignField: "_id", // Adjust based on your items collection structure
+                        foreignField: "_id",
                         as: "itemDetails"
                     }
                 },
@@ -31,8 +33,8 @@ export async function GET() {
                     $project: {
                         _id: 0,
                         itemId: "$_id",
-                        itemName: "$itemDetails.name", // Adjust field name based on your items schema
-                        currentQuantity: "$itemDetails.currentQuantity", // Get actual current quantity from inventory
+                        itemName: "$itemDetails.name",
+                        currentQuantity: "$itemDetails.currentQuantity",
                         totalConsumption: 1
                     }
                 },
