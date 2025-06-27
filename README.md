@@ -4,6 +4,15 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 Make sure mongodb installed on your local machine
 
+add .env file on root of the project
+
+```bash
+.env
+
+MONGO_CONNECTION_STRING=mongodb://localhost:27017/inventory
+
+```
+
 Start mongodb server
 
 and
@@ -12,15 +21,15 @@ run the development server:
 
 ```bash
 
-npm i 
+npm i
 
-# or 
+# or
 
 pnpm i
 
-# or  
+# or
 
-yarn  
+yarn
 
 and
 
