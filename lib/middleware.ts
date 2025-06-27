@@ -12,7 +12,6 @@ export const middleware = async (request: NextRequest) => {
     if (!token) {
         return NextResponse.json({ message: "Access Denied" }, { status: 401 })
     }
-
     const decodedUser = jwt.verify(token, "DCBA") as Data
 
     const user = await User.findOne({

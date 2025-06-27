@@ -20,9 +20,6 @@ import { AddItemQuantity } from "./AddItemQuantity"
 import Card from "./Card"
 import LoadingData from "./LoadingData"
 
-
-
-// Main Items Component
 export default function InventoryItems() {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [searchTerm, setSearchTerm] = useState("")
@@ -43,28 +40,31 @@ export default function InventoryItems() {
 
     const { data: inventoryItems = [], loading, fetch } = GetData<InventoryItem[]>(`api/items`)
 
-    const getStockStatus = (currentQuantity: number, reorderThreshold: number) => {
-        if (currentQuantity === 0) {
-            return {
-                status: "Out of Stock",
-                color: "text-red-700 bg-red-100 border-red-200",
-                icon: AlertTriangle,
-                priority: 3,
-            }
-        } else if (currentQuantity <= reorderThreshold) {
-            return {
-                status: "Low Stock",
-                color: "text-amber-700 bg-amber-100 border-amber-200",
-                icon: TrendingDown,
-                priority: 2,
-            }
-        } else {
-            return {
-                status: "In Stock",
-                color: "text-green-700 bg-green-100 border-green-200",
-                icon: CheckCircle,
-                priority: 1,
-            }
+    const getStockStatus = (status: string) => {
+        switch (status) {
+            case "OUT_OF_STOCK":
+                return {
+                    status: "Out of Stock",
+                    color: "text-red-700 bg-red-100 border-red-200",
+                    icon: AlertTriangle,
+                    priority: 3,
+                }
+
+            case "LOW_STOCK":
+                return {
+                    status: "Low Stock",
+                    color: "text-amber-700 bg-amber-100 border-amber-200",
+                    icon: TrendingDown,
+                    priority: 2,
+                }
+
+            default:
+                return {
+                    status: "In Stock",
+                    color: "text-green-700 bg-green-100 border-green-200",
+                    icon: CheckCircle,
+                    priority: 1,
+                };
         }
     }
 
@@ -82,7 +82,7 @@ export default function InventoryItems() {
         const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase())
         if (filterStatus === "all") return matchesSearch
 
-        const status = getStockStatus(item.currentQuantity, item.reorderThreshold)
+        const status = getStockStatus(item.status)
         return matchesSearch && status.status.toLowerCase().replace(" ", "") === filterStatus
     })
 
@@ -213,7 +213,7 @@ export default function InventoryItems() {
                                 </thead>
                                 <tbody className="divide-y divide-gray-100">
                                     {filteredItems.map((item, index) => {
-                                        const stockStatus = getStockStatus(item.currentQuantity, item.reorderThreshold)
+                                        const stockStatus = getStockStatus(item.status)
                                         const StatusIcon = stockStatus.icon
 
                                         return (

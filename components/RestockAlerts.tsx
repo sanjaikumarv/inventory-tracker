@@ -17,31 +17,37 @@ export default function RestockAlerts() {
 
 function Data({ alerts }: { alerts: RestockAlert[] }) {
   const getPriorityBadge = (days: number) => {
-    if (days <= 1) {
-      return (
-        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 border border-red-200">
-          Critical
-        </span>
-      )
-    } else if (days <= 3) {
-      return (
-        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-800 border border-orange-200">
-          High
-        </span>
-      )
-    } else {
-      return (
-        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-200">
-          Medium
-        </span>
-      )
+    switch (true) {
+      case days <= 1:
+        return (
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 border border-red-200">
+            Critical
+          </span>
+        )
+      case days <= 3:
+        return (
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-800 border border-orange-200">
+            High
+          </span>
+        )
+      default:
+        return (
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-200">
+            Medium
+          </span>
+        )
     }
   }
 
   const getPriorityColor = (days: number) => {
-    if (days <= 1) return "border-red-300 bg-gradient-to-br from-red-50 to-red-100 shadow-red-100"
-    if (days <= 3) return "border-orange-300 bg-gradient-to-br from-orange-50 to-orange-100 shadow-orange-100"
-    return "border-yellow-300 bg-gradient-to-br from-yellow-50 to-yellow-100 shadow-yellow-100"
+    switch (true) {
+      case days <= 1:
+        return "border-red-300 bg-gradient-to-br from-red-50 to-red-100 shadow-red-100"
+      case days <= 3:
+        return "border-orange-300 bg-gradient-to-br from-orange-50 to-orange-100 shadow-orange-100"
+      default:
+        return "border-yellow-300 bg-gradient-to-br from-yellow-50 to-yellow-100 shadow-yellow-100"
+    }
   }
 
   if (alerts.length === 0) {

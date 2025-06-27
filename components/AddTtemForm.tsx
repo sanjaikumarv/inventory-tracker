@@ -47,17 +47,12 @@ function ItemFormFields({ loading, message }: ItemFormFieldsProps) {
   const units = [
     { label: "Kilograms (kg)", value: "KG", icon: "⚖️" },
     { label: "Liters (L)", value: "LITER", icon: "🥤" },
-    { label: "Pieces (pcs)", value: "PIECES", icon: "📦" },
-    { label: "Grams (g)", value: "GRAMS", icon: "⚖️" },
-    { label: "Milliliters (ml)", value: "ML", icon: "🥤" },
-    { label: "Pounds (lbs)", value: "POUNDS", icon: "⚖️" },
   ]
 
 
   return (
     <Form className="max-w-5xl mx-auto">
       <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
-        {/* Header */}
         <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 px-8 py-8">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-sm">
@@ -71,7 +66,6 @@ function ItemFormFields({ loading, message }: ItemFormFieldsProps) {
         </div>
 
         <div className="p-8">
-          {/* Success/Error Message */}
           {message && (
             <div
               className={`flex items-center gap-4 mb-8 px-6 py-5 rounded-2xl border-2 shadow-lg ${message.type === "success"
@@ -89,10 +83,8 @@ function ItemFormFields({ loading, message }: ItemFormFieldsProps) {
             </div>
           )}
 
-          {/* Form Fields */}
           <div className="space-y-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Item Name */}
               <div className="space-y-3">
                 <label htmlFor="name" className="flex items-center gap-2 text-sm font-bold text-gray-700">
                   <Package className="h-4 w-4 text-blue-600" />
@@ -110,7 +102,6 @@ function ItemFormFields({ loading, message }: ItemFormFieldsProps) {
                 </div>
               </div>
 
-              {/* Unit of Measure */}
               <div className="space-y-3">
                 <label htmlFor="unit" className="flex items-center gap-2 text-sm font-bold text-gray-700">
                   <Scale className="h-4 w-4 text-purple-600" />
@@ -138,7 +129,6 @@ function ItemFormFields({ loading, message }: ItemFormFieldsProps) {
                 </div>
               </div>
 
-              {/* Current Quantity */}
               <div className="space-y-3">
                 <label htmlFor="currentQuantity" className="flex items-center gap-2 text-sm font-bold text-gray-700">
                   <Hash className="h-4 w-4 text-green-600" />
@@ -158,7 +148,6 @@ function ItemFormFields({ loading, message }: ItemFormFieldsProps) {
                 </div>
               </div>
 
-              {/* Reorder Threshold */}
               <div className="space-y-3">
                 <label htmlFor="reorderThreshold" className="flex items-center gap-2 text-sm font-bold text-gray-700">
                   <Target className="h-4 w-4 text-orange-600" />
@@ -184,7 +173,6 @@ function ItemFormFields({ loading, message }: ItemFormFieldsProps) {
               </div>
             </div>
 
-            {/* Submit Button */}
             <div className="flex justify-end pt-4">
               <button
                 type="submit"

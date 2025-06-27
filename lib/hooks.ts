@@ -4,14 +4,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import jwt from 'jsonwebtoken'
 import { tokenStorage } from "./tokenStorage";
-import { useAuth } from "./AuthContext";
 
 function ErrorFunction(error: unknown, onError: (error?: unknown) => void) {
-    const { logout } = useAuth()
     if (onError) {
         if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
             if (error.response.status === 401) {
-                logout()
+                window.location.href = '/logout'
             }
             onError(error.response.data.message || 'Something went wrong');
 

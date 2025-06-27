@@ -32,7 +32,6 @@ function LoginFormFields({ loading, message }: LoginFormFieldsProps) {
     return (
         <Form className="max-w-2xl mx-auto">
             <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
-                {/* Header */}
                 <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 px-8 py-8">
                     <div className="flex items-center gap-4">
                         <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-sm">
@@ -46,7 +45,6 @@ function LoginFormFields({ loading, message }: LoginFormFieldsProps) {
                 </div>
 
                 <div className="p-8">
-                    {/* Success/Error Message */}
                     {message && (
                         <div
                             className={`flex items-center gap-4 mb-8 px-6 py-5 rounded-2xl border-2 shadow-lg ${message.type === "success"
@@ -64,9 +62,7 @@ function LoginFormFields({ loading, message }: LoginFormFieldsProps) {
                         </div>
                     )}
 
-                    {/* Form Fields */}
                     <div className="space-y-8">
-                        {/* Email Field */}
                         <div className="space-y-3">
                             <label htmlFor="email" className="flex items-center gap-2 text-sm font-bold text-gray-700">
                                 <Mail className="h-4 w-4 text-blue-600" />
@@ -84,7 +80,6 @@ function LoginFormFields({ loading, message }: LoginFormFieldsProps) {
                             </div>
                         </div>
 
-                        {/* Password Field */}
                         <div className="space-y-3">
                             <label htmlFor="password" className="flex items-center gap-2 text-sm font-bold text-gray-700">
                                 <Lock className="h-4 w-4 text-purple-600" />

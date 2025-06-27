@@ -8,21 +8,18 @@ export async function GET(request: NextRequest) {
     await ensureConnection()
     await middleware(request)
 
-    const thirtyDaysAgo = new Date()
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
-
     const alerts = await InventoryItem.aggregate([
       {
         $lookup: {
           from: "inventoryConsumptions",
-          let: { itemId: "$_id" },
+          let: { itemId: "$_id", updatedDate: "$updatedAt" },
           pipeline: [
             {
               $match: {
                 $expr: {
                   $and: [
                     { $eq: ["$itemId", "$$itemId"] },
-                    { $gte: ["$date", thirtyDaysAgo] }
+                    { $gte: ["$date", "$updatedAt"] }
                   ]
                 }
               }
